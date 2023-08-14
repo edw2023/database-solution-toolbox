@@ -69,7 +69,11 @@ public class TestDataGenerator {
     // ... Add more methods for other fields
 
     public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
+        generateTestData(10);
+    }
+
+    public static void generateTestData(int amount) {
+        for (int i = 0; i < amount; i++) {
             String name = generateRandomName();
             String email = generateRandomEmail(name);
             int age = generateRandomAge();
