@@ -1,6 +1,7 @@
 package com.pw.db.solution.toolbox.util;
 
 import com.pw.db.solution.toolbox.util.testData.TestData;
+import org.apache.logging.log4j.util.Strings;
 
 import java.util.Random;
 
@@ -18,10 +19,15 @@ public class TestDataGenerator {
         return generateRandomItem(TestData.NAMES);
     }
 
-    public static String generateRandomEmail() {
-        int nameIndex = random.nextInt(TestData.NAMES.length);
-        int domainIndex = random.nextInt(TestData.EMAIL_DOMAINS.length);
-        return TestData.NAMES[nameIndex].toLowerCase() + "@" + TestData.EMAIL_DOMAINS[domainIndex];
+    public static String generateRandomEmail(String name) {
+        if(Strings.isBlank(name)){
+            int nameIndex = random.nextInt(TestData.NAMES.length);
+            int domainIndex = random.nextInt(TestData.EMAIL_DOMAINS.length);
+            return TestData.NAMES[nameIndex].toLowerCase() + "@" + TestData.EMAIL_DOMAINS[domainIndex];
+        } else {
+            int domainIndex = random.nextInt(TestData.EMAIL_DOMAINS.length);
+            return name + "@" + TestData.EMAIL_DOMAINS[domainIndex];
+        }
     }
 
     public static int generateRandomAge() {
@@ -29,6 +35,9 @@ public class TestDataGenerator {
     }
 
     public static String generateRandomCity(String country) {
+        if(Strings.isBlank(country)){
+            country = generateRandomCountry();
+        }
         return generateRandomItem(TestData.COUNTRY_CITIES_MAP.get(country));
     }
 
@@ -62,7 +71,7 @@ public class TestDataGenerator {
     public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {
             String name = generateRandomName();
-            String email = generateRandomEmail();
+            String email = generateRandomEmail(name);
             int age = generateRandomAge();
             String country = generateRandomCountry();
             String city = generateRandomCity(country);
